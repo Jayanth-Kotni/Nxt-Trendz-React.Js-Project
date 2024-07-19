@@ -76,7 +76,7 @@ class AllProductsSection extends Component {
   state = {
     productsList: [],
     apiStatus: apiStatusConstants.initial,
-    activeOptionId: sortbyOptions[0].optionId,
+    actOptId: sortbyOptions[0].optionId,
     activeCategoryId: '',
     searchInput: '',
     activeRatingId: '',
@@ -91,13 +91,8 @@ class AllProductsSection extends Component {
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
-    const {
-      activeOptionId,
-      activeCategoryId,
-      searchInput,
-      activeRatingId,
-    } = this.state
-    const apiUrl = `https://apis.ccbp.in/products?sort_by=${activeOptionId}&category=${activeCategoryId}&title_search=${searchInput}&rating=${activeRatingId}`
+    const {actOptId, activeCategoryId, searchInput, activeRatingId} = this.state
+    const apiUrl = `https://apis.ccbp.in/products?sort_by=${actOptId}&category=${activeCategoryId}&title_search=${searchInput}&rating=${activeRatingId}`
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -148,18 +143,18 @@ class AllProductsSection extends Component {
     </div>
   )
 
-  changeSortby = activeOptionId => {
-    this.setState({activeOptionId}, this.getProducts)
+  changeSortby = actOptId => {
+    this.setState({actOptId}, this.getProducts)
   }
 
   renderProductsListView = () => {
-    const {productsList, activeOptionId} = this.state
+    const {productsList, actOptId} = this.state
     const shouldShowProductsList = productsList.length > 0
 
     return shouldShowProductsList ? (
       <div className="all-products-container">
         <ProductsHeader
-          activeOptionId={activeOptionId}
+          actOptId={actOptId}
           sortbyOptions={sortbyOptions}
           changeSortby={this.changeSortby}
         />
